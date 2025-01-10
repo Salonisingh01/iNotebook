@@ -2,7 +2,9 @@ const express = require('express');
 const User = require('../models/User');
 const router = express.Router();
 const { body ,  validationResult } = require('express-validator');
-
+const bcrypt = require('bcryptjs');
+const JWT_SECRET = 'salonisinghhghbnyj$$@154';
+var jwt = require('jsonwebtoken');
 
 //Create a user using POST "/api/auth/createuser"---doesn't require auth--
 router.post('/createuser', [
@@ -25,14 +27,30 @@ router.post('/createuser', [
         return res.status(400).json({error:"sorry a user with this email already exists"})
     }
     
+
+    // changing password to hash using npm install bcyptjs-**
+    const salt = await bcrypt.genSalt(10);
+    const secPaas = await bcrypt.hash(req.body.password,salt);
+   
+
     //create a new user---
     const user = await User.create({  
         name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
+        email:req.body.email,
+        password: secPaas
     })
     
-    res.json({user})
+
+    //creating authentication token for user----
+    const data = {
+      user:{
+        id:user.id
+      }
+    }
+   const authToken = jwt.sign(data , JWT_SECRET);
+   console.log(authToken);
+   res.json({authToken});
+
     
 } catch(error) {
     console.error(error.message);
@@ -40,4 +58,4 @@ router.post('/createuser', [
 }}
 );
 
-module.exports = router;
+module.exports = router; 
