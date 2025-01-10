@@ -22,5 +22,4 @@ date:{
 }
 }) ;
 const User = mongoose.model('user',userSchema);
-User.createIndexes();
 module.exports = User  //create a schema  giving("modelName","schema")
