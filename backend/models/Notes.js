@@ -3,6 +3,11 @@ const mongoose = require('mongoose'); // to manage database structure automatica
 
 //create schems to store user data----
 const NotesSchema = new mongoose.Schema({
+    user:{
+      
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    },
 title:{
     type:String,
     required:true
