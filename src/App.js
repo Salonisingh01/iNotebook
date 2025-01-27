@@ -3,12 +3,14 @@ import { BrowserRouter,Route,Routes } from 'react-router-dom';
 import { Navbar } from './Components/Navbar';
 import { Home } from './Components/Home';
 import { About } from './Components/About';
+import NoteState from './Context/notes/Notestate';
 
 
 function App() {
   return (
      <>
-     <Navbar/>
+     <NoteState>
+       <Navbar/>
    
        <Routes>
           <Route path="/" element={<Home />} />
@@ -16,7 +18,7 @@ function App() {
 
        </Routes>
      
-
+      </NoteState>
     </>
   );
 }
