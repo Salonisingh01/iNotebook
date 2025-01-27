@@ -104,7 +104,7 @@ router.post('/login', [ //endpoint /login
 });
       
 
-//Route 2  : Get logged User Details using : Post "/api/auth/getuser". Login required----
+//Route 3  : Get logged User Details using : Post "/api/auth/getuser". Login required----
 
 router.post('/getuser', fetchUser, async(req, res) => {
 try {
@@ -121,3 +121,4 @@ try {
 }
 });
 module.exports = router; 
+
