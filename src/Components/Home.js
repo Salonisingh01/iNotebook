@@ -1,14 +1,17 @@
 //rafc -react Arrow Function Component------
-import React from 'react'
+import React from "react";
+import { Notes } from "./Notes";
 
 export const Home = () => {
+
   return (
-    <div>This is Home Page</div>
+    <div>
     
-  )
-}
+     <Notes/>
 
-
+    </div>
+  );
+};
 
 //rfce --React Function import Component
 // import React from 'react'
