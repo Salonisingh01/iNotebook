@@ -66,7 +66,8 @@ router.post('/createuser', [
 router.post('/login', [ //endpoint /login
   body('email','Enter a valid Email ').isEmail(),
   body('password','Password can not be blank ').exists()
-],async(req, res) => {
+],async(req, res) => { 
+  let Success = false;
 
    //if there are errors, return Bas request and the errors---
    const errors = validationResult(req);
@@ -77,14 +78,15 @@ router.post('/login', [ //endpoint /login
   const {email,password} = req.body;
    try {
     let user = await User.findOne({email});
+    Sucess = false;
       if(!user){
         return res.status(400).json({error:"Plese Login with correct credentials..."})
       }
 
       const passwordCompare = await  bcrypt.compare(password, user.password);
       if(!passwordCompare){
-
-        return res.status(400).json({error:"Plese Login with correct credentials..."})
+       Sucess = false;
+        return res.status(400).json({Sucess,error:"Plese Login with correct credentials..."})
       }
       const data = {
         user:{
@@ -92,7 +94,8 @@ router.post('/login', [ //endpoint /login
         }
       }
      const authToken = jwt.sign(data , JWT_SECRET);
-     res.json({authToken});
+     Success = true;
+     res.json({Success,authToken});
 
    } catch (error) {
 
