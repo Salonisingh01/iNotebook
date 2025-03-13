@@ -1,14 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { useRef } from "react";
 import noteContext from "../Context/notes/NoteContext";
 import Noteitem from "./Noteitem";
 import { AddNote } from "./AddNote";
+import { useNavigate } from "react-router-dom";
 
 export const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, getNotes, editNote} = context;
+  let navigate = useNavigate();
+  const { notes, getNotes, editNote } = context;
   useEffect(() => {
-    getNotes();
+    if(localStorage.getItem('token')){
+      
+      getNotes();
+
+    }
+    else{
+      navigate('/login')
+    }
     //eslint-disable-next-line
   }, []);
 
@@ -16,9 +25,7 @@ export const Notes = () => {
   const refClose = useRef(null);
 
   const [note, setnote] = useState({
-    id: "",
-    etitle: "",
-    edescription: "",
+    id: "", etitle: "", edescription: "",
     etag: "default",
   });
 
@@ -124,7 +131,7 @@ export const Notes = () => {
               </form>
             </div>
             <div className="modal-footer">
-              <button 
+              <button
                 ref={refClose}
                 type="button"
                 className="btn btn-secondary"
@@ -132,7 +139,7 @@ export const Notes = () => {
               >
                 Close
               </button>
-              <button onClick ={handleClick} type="button" className="btn btn-primary">
+              <button onClick={handleClick} type="button" className="btn btn-primary">
                 Update Note
               </button>
             </div>
@@ -142,12 +149,11 @@ export const Notes = () => {
       <div className="container row my-3">
         <h2>Your Notes</h2>
         <div className="container mx-2">
-          {notes.length === 0 &&" No notes to display"}
+          {notes.length === 0 && 'No notes to display'}
         </div>
         {notes.map((note) => {
-          return (
-            <Noteitem note={note} updateNote={updateNote} key={note._id} />
-          );
+          return <Noteitem note={note} updateNote={updateNote} key={note._id} />
+            ;
         })}
       </div>
     </>

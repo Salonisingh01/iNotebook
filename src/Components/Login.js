@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
-        email:"" ,
-        password:""
+        email: "",
+        password: ""
     })
     let navigate = useNavigate();
-   
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,18 +17,19 @@ const Login = () => {
             headers: {
                 "content-Type": "application/json"
             },
-            body: JSON.stringify ({email:credentials.email, password:credentials.password})
+            body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
         const json = await response.json()
         console.log(json);
-        if (json.Success){
+        if (json.Success) {
+
             //Save the authtoken & redirect
-            localStorage.setItem('token',json.authtoken);
+            localStorage.setItem('token', json.authToken);
             navigate("/");
-       }
-       else{
-        alert("Invalid Credentials");
-       }
+        }
+        else {
+            alert("Invalid Credentials");
+        }
     };
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
